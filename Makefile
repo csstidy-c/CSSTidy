@@ -70,6 +70,13 @@ CSSTIDYOBJS= \
 MANPAGES= \
 	csstidy/csstidy.1 \
 
+# Platform-specific settings
+ifeq ($(OS), Windows_NT)
+LDCFLAGS=$(HOSTCFLAGS) # No -z,noexecstack for Windows
+else
+LDCFLAGS=$(HOSTCFLAGS) -Wl,-z,noexecstack
+endif
+
 .cpp.o:
 	$(CXX) -o $(RELEASE_DIR)/$@ -c $(CFLAGS) $<
 
